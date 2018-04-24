@@ -7,6 +7,7 @@
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright 2016-2018 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2018      Team-Hycon  <https://github.com/Team-Hycon>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,7 +33,7 @@
 
 #include "common/crypto/Algorithm.h"
 #include "common/net/Id.h"
-
+#include "net/Protocol.h"
 
 class Job
 {
@@ -43,12 +44,14 @@ public:
 
     bool setBlob(const char *blob);
     bool setTarget(const char *target);
+    bool setJobId(const char *id);
+    bool setJobUnit(const char *unit);
     xmrig::Variant variant() const;
 
     inline bool isNicehash() const                    { return m_nicehash; }
     inline bool isValid() const                       { return m_size > 0 && m_diff > 0; }
     inline bool setId(const char *id)                 { return m_id.setId(id); }
-    inline const uint32_t *nonce() const              { return reinterpret_cast<const uint32_t*>(m_blob + 39); }
+    inline const uint64_t *nonce() const              { return reinterpret_cast<const uint64_t*>(m_blob + LEN::PREHASH); }
     inline const uint8_t *blob() const                { return m_blob; }
     inline const xmrig::Algorithm &algorithm() const  { return m_algorithm; }
     inline const xmrig::Id &clientId() const          { return m_clientId; }
@@ -56,9 +59,11 @@ public:
     inline int poolId() const                         { return m_poolId; }
     inline int threadId() const                       { return m_threadId; }
     inline size_t size() const                        { return m_size; }
-    inline uint32_t *nonce()                          { return reinterpret_cast<uint32_t*>(m_blob + 39); }
-    inline uint32_t diff() const                      { return static_cast<uint32_t>(m_diff); }
-    inline uint64_t target() const                    { return m_target; }
+    inline uint64_t *nonce()                          { return reinterpret_cast<uint64_t*>(m_blob + LEN::PREHASH);  }
+    inline uint32_t diff() const                      { return (uint32_t) m_diff; }
+    inline uint32_t target() const                    { return m_target; }
+    inline uint64_t jobId() const                     { return m_jobId; }
+    inline uint64_t jobUnit() const                   { return m_jobUnit; }
     inline void reset()                               { m_size = 0; m_diff = 0; }
     inline void setClientId(const xmrig::Id &id)      { m_clientId = id; }
     inline void setPoolId(int poolId)                 { m_poolId = poolId; }
@@ -66,37 +71,41 @@ public:
     inline xmrig::Algorithm &algorithm()              { return m_algorithm; }
 
 #   ifdef XMRIG_PROXY_PROJECT
-    inline char *rawBlob()                 { return m_rawBlob; }
-    inline const char *rawTarget() const   { return m_rawTarget; }
+    inline char *rawBlob()                            { return m_rawBlob; }
+    inline const char *rawTarget() const              { return m_rawTarget; }
 #   endif
 
     static bool fromHex(const char* in, unsigned int len, unsigned char* out);
-    static inline uint32_t *nonce(uint8_t *blob)   { return reinterpret_cast<uint32_t*>(blob + 39); }
-    static inline uint64_t toDiff(uint64_t target) { return 0xFFFFFFFFFFFFFFFFULL / target; }
+    static inline uint64_t *nonce(uint8_t *blob)   { return reinterpret_cast<uint64_t*>(blob + LEN::PREHASH); }
+    static inline uint32_t toDiff(uint32_t target) { return target; }
     static void toHex(const unsigned char* in, unsigned int len, char* out);
+    static void toHexLittle(const unsigned char* in, unsigned int len, char* out);
 
 #   ifdef APP_DEBUG
     static char *toHex(const unsigned char* in, unsigned int len);
 #   endif
 
     bool operator==(const Job &other) const;
-    bool operator!=(const Job &other) const;
+    bool operator!=(const Job &other) const;    
 
 private:
     bool m_nicehash;
     int m_poolId;
     int m_threadId;
     size_t m_size;
-    uint64_t m_diff;
-    uint64_t m_target;
-    uint8_t m_blob[96]; // Max blob size is 84 (75 fixed + 9 variable), aligned to 96. https://github.com/xmrig/xmrig/issues/1 Thanks fireice-uk.
+    uint32_t m_diff;
+    uint32_t m_target;
+    uint8_t m_blob[LEN::BLOB];
+    uint64_t m_jobId;
+    uint64_t m_jobUnit;
     xmrig::Algorithm m_algorithm;
     xmrig::Id m_clientId;
+
     xmrig::Id m_id;
 
 #   ifdef XMRIG_PROXY_PROJECT
-    char m_rawBlob[176];
-    char m_rawTarget[24];
+    char m_rawBlob[LEN::BLOB_HEX];
+    char m_rawTarget[LEN::DIFF_HEX];
 #   endif
 };
 

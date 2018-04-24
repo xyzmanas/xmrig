@@ -7,6 +7,7 @@
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright 2016-2018 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2018      Team-Hycon  <https://github.com/Team-Hycon>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -100,11 +101,11 @@ bool Job::setBlob(const char *blob)
     }
 
     m_size /= 2;
-    if (m_size < 76 || m_size >= sizeof(m_blob)) {
+    if (m_size < LEN::PREHASH || m_size >= sizeof(m_blob)) {
         return false;
     }
 
-    if (!fromHex(blob, (int) m_size * 2, m_blob)) {
+    if (!fromHex(blob, (int) m_size*2, m_blob)) {
         return false;
     }
 
@@ -117,6 +118,7 @@ bool Job::setBlob(const char *blob)
     memcpy(m_rawBlob, blob, m_size * 2);
 #   endif
 
+    m_size = LEN::BLOB;
     return true;
 }
 
@@ -129,7 +131,18 @@ bool Job::setTarget(const char *target)
 
     const size_t len = strlen(target);
 
-    if (len <= 8) {
+    if( len <= LEN::DIFF_HEX) {
+        uint32_t tmp = 0;
+        char str[LEN::DIFF_HEX];
+        memset(str, '0', LEN::DIFF_HEX);
+        memcpy(str, target, len);
+
+        if (!fromHex(str, LEN::DIFF_HEX, reinterpret_cast<unsigned char*>(&tmp)) || tmp == 0) {
+            return false;
+        }
+
+        m_target = tmp;
+    } else if (len <= 8) {
         uint32_t tmp = 0;
         char str[8];
         memcpy(str, target, len);
@@ -157,11 +170,47 @@ bool Job::setTarget(const char *target)
     memset(m_rawTarget, 0, sizeof(m_rawTarget));
     memcpy(m_rawTarget, target, len);
 #   endif
-
-    m_diff = toDiff(m_target);
+    
+    m_diff = m_target;
     return true;
 }
 
+
+bool Job::setJobId(const char *id)
+{
+    if(!id) {
+        return false; 
+    }
+    const size_t jobIdLen = strlen(id);
+    if(jobIdLen != LEN::NONCE_HEX){
+        return false;
+    }
+    char jobId[LEN::NONCE_HEX+1];
+    memset(jobId, 0, LEN::NONCE_HEX+1);
+    memcpy(jobId, id, jobIdLen);
+
+    if(!fromHex(jobId, jobIdLen, reinterpret_cast<unsigned char*>(&m_jobId))){
+        return false;
+    }
+    return true;
+}
+
+bool Job::setJobUnit(const char *unit){
+    if(!unit) {
+        return false; 
+    }
+
+    const size_t unitLen = strlen(unit);
+
+    char jobUnit[unitLen+1];
+    memset(jobUnit, 0, unitLen+1);
+    memcpy(jobUnit, unit, unitLen);
+
+    if(!fromHex(jobUnit, unitLen, reinterpret_cast<unsigned char*>(&m_jobUnit)) || m_jobUnit == 0){
+        return false;
+    }
+    return true;
+}
 
 xmrig::Variant Job::variant() const
 {
@@ -189,8 +238,7 @@ bool Job::fromHex(const char* in, unsigned int len, unsigned char* out)
 {
     bool error = false;
     for (unsigned int i = 0; i < len; i += 2) {
-        out[i / 2] = (hf_hex2bin(in[i], error) << 4) | hf_hex2bin(in[i + 1], error);
-
+        out[(len -i -1) / 2] = (hf_hex2bin(in[i], error) << 4) | (hf_hex2bin(in[i + 1], error) );
         if (error) {
             return false;
         }
@@ -198,6 +246,13 @@ bool Job::fromHex(const char* in, unsigned int len, unsigned char* out)
     return true;
 }
 
+void Job::toHexLittle(const unsigned char* in, unsigned int len, char* out)
+{
+    for (unsigned int i = 0; i < len; i++) {
+        out[(len - i)*2 - 2] = hf_bin2hex((in[i] & 0xF0) >> 4);
+        out[(len - i)*2 - 1] = hf_bin2hex(in[i] & 0x0F);
+    }
+}
 
 void Job::toHex(const unsigned char* in, unsigned int len, char* out)
 {

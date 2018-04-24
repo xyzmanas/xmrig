@@ -6,6 +6,7 @@
  * Copyright 2016      Jay D Dee   <jayddee246@gmail.com>
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2016-2018 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2018      Team-Hycon  <https://github.com/Team-Hycon>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@
 
 #include <memory.h>
 #include <stdint.h>
-
+#include "net/Protocol.h"
 
 #include "common/net/Job.h"
 
@@ -36,7 +37,7 @@ class JobResult
 {
 public:
     inline JobResult() : poolId(0), diff(0), nonce(0) {}
-    inline JobResult(int poolId, const xmrig::Id &jobId, uint32_t nonce, const uint8_t *result, uint32_t diff, const xmrig::Algorithm &algorithm) :
+    inline JobResult(int poolId, const xmrig::Id &jobId, uint64_t nonce, const uint8_t *result, uint32_t diff, const xmrig::Algorithm &algorithm) :
         poolId(poolId),
         diff(diff),
         nonce(nonce),
@@ -47,16 +48,16 @@ public:
     }
 
 
-    inline uint64_t actualDiff() const
+    inline uint32_t actualDiff() const
     {
-        return Job::toDiff(reinterpret_cast<const uint64_t*>(result)[3]);
+        return Job::toDiff((result[0] << 8) + result[1]);
     }
 
 
     int poolId;
     uint32_t diff;
-    uint32_t nonce;
-    uint8_t result[32];
+    uint64_t nonce;
+    uint8_t result[LEN::RESULT];
     xmrig::Algorithm algorithm;
     xmrig::Id jobId;
 };
