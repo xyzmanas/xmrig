@@ -126,7 +126,7 @@ void (*cryptonight_variations[4])(const uint8_t *input, size_t size, uint8_t *ou
 
 bool CryptoNight::hash(const Job &job, JobResult &result, cryptonight_ctx *ctx)
 {
-    cryptonight_hash_ctx(job.blob(), LEN::BLOB, result.result, ctx, 0); 
+    cryptonight_hash_ctx(job.blob(), LEN::BLOB, result.result, ctx, job.variant()); 
     uint32_t diffResult = (result.result[0] << 8) + result.result[1];
     
     return diffResult < job.target();
