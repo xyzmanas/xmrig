@@ -2,7 +2,7 @@
 
 HYCminer is a high performance Hycon (HYC) CPU miner, forked from [XMRig](https://github.com/xmrig/xmrig) release v2.5.3.
 
-* This is the **CPU-mining** version, there is also a [NVIDIA GPU version](https://bitbucket.org/glosfer/miner-nvidia) and [AMD GPU version](https://bitbucket.org/glosfer/miner-amd).
+* This is the **CPU-mining** version, there is also a [NVIDIA GPU version](https://github.com/team-hycon/xmrig-nvidia) and [AMD GPU version](https://github.com/team-hycon/xmrig-amd).
 * We plan on releasing our roadmap for next releases soon.
 
 #### Table of contents
@@ -10,7 +10,7 @@ HYCminer is a high performance Hycon (HYC) CPU miner, forked from [XMRig](https:
 * [Download](#download)
 * [Usage](#usage)
 * [Algorithm variations](#algorithm-variations)
-* [Build](https://bitbucket.org/glosfer/cpu-miner/wiki/Build)
+* [Build](https://github.com/team-hycon/xmrig/wiki/Build)
 * [Common Issues](#common-issues)
 * [Other information](#other-information)
 * [Contacts](#contacts)
@@ -23,14 +23,14 @@ HYCminer is a high performance Hycon (HYC) CPU miner, forked from [XMRig](https:
 * Support for backup (failover) mining server.
 * keepalived support.
 * Command line options compatible with cpuminer.
-* Smart automatic [CPU configuration](https://bitbucket.org/glosfer/cpu-miner/wiki/Threads).
+* Smart automatic [CPU configuration](https://github.com/team-hycon/xmrig/wiki/Threads).
 * Nicehash support
 * It's open source software.
 
 ## Download
 * Binary releases: TBA
-* Git tree: https://bitbucket.org/glosfer/cpu-miner.git
-    * Clone with `git clone https://bitbucket.org/glosfer/cpu-miner.git` :hammer: [Build instructions](https://bitbucket.org/glosfer/cpu-miner/wiki/Build).
+* Git tree: https://github.com/team-hycon/cpu-miner.git
+    * Clone with `git clone https://github.com/team-hycon/cpu-miner.git` :hammer: [Build instructions](https://github.com/team-hycon/xmrig/wiki/Build).
 
 ## Usage
 See the example `config.json` to configure the miner.
