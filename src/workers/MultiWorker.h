@@ -7,6 +7,7 @@
  * Copyright 2017-2018 XMR-Stak    <https://github.com/fireice-uk>, <https://github.com/psychocrypt>
  * Copyright 2018      Lee Clagett <https://github.com/vtnerd>
  * Copyright 2016-2018 XMRig       <https://github.com/xmrig>, <support@xmrig.com>
+ * Copyright 2018      Team-Hycon  <https://github.com/Team-Hycon>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,6 +31,7 @@
 #include "Mem.h"
 #include "net/JobResult.h"
 #include "workers/Worker.h"
+#include "net/Protocol.h"
 
 
 class Handle;
@@ -52,14 +54,14 @@ private:
     void consumeJob();
     void save(const Job &job);
 
-    inline uint32_t *nonce(size_t index)
+    inline uint64_t *nonce(size_t index)
     {
-        return reinterpret_cast<uint32_t*>(m_state.blob + (index * m_state.job.size()) + 39);
+        return reinterpret_cast<uint64_t*>(m_state.blob + LEN::PREHASH);
     }
 
     struct State
     {
-        alignas(16) uint8_t blob[96 * N];
+        alignas(16) uint8_t blob[LEN::BLOB * N];
         Job job;
     };
 
@@ -67,7 +69,7 @@ private:
     cryptonight_ctx *m_ctx[N];
     State m_pausedState;
     State m_state;
-    uint8_t m_hash[N * 32];
+    uint8_t m_hash[N * LEN::RESULT];
 };
 
 

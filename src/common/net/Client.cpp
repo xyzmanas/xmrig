@@ -168,12 +168,14 @@ int64_t Client::submit(const JobResult &result)
     const char *nonce = result.nonce;
     const char *data  = result.result;
 #   else
-    char *nonce = m_sendBuf;
-    char *data  = m_sendBuf + LEN::NONCE_HEX;
+    char nonce[LEN::NONCE_HEX + 1];
+    char data[LEN::RESULT_HEX + 1];
 
+    memset(nonce, 0, LEN::NONCE_HEX + 1);
     Job::toHexLittle(reinterpret_cast<const unsigned char*>(&result.nonce), LEN::NONCE, nonce);
     nonce[LEN::NONCE_HEX] = '\0';
 
+    memset(data, 0, LEN::RESULT_HEX + 1);
     Job::toHex(result.result, LEN::RESULT, data);
     data[LEN::RESULT_HEX] = '\0';
 #   endif
@@ -857,8 +859,8 @@ void Client::sendAuthorize()
 
     rapidjson::Value params(rapidjson::kArrayType);
 
-    params.PushBack(rapidjson::StringRef(m_url.user()), allocator);
-    params.PushBack(rapidjson::StringRef(m_url.password()), allocator);
+    params.PushBack(rapidjson::StringRef(m_pool.user()), allocator);
+    params.PushBack(rapidjson::StringRef(m_pool.password()), allocator);
    
     doc.AddMember("params", params, allocator);
 
