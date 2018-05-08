@@ -1,6 +1,6 @@
 # HYCminer
 
-HYCminer is a high performance Hycon (HYC) CPU miner, forked from [XMRig](https://github.com/xmrig/xmrig) release v2.5.3.
+HYCminer is a high performance Hycon (HYC) CPU miner, forked from [XMRig](https://github.com/xmrig/xmrig) release v2.6.2.
 
 * This is the **CPU-mining** version, there is also a [NVIDIA GPU version](https://github.com/team-hycon/xmrig-nvidia) and [AMD GPU version](https://github.com/team-hycon/xmrig-amd).
 * We plan on releasing our roadmap for next releases soon.
