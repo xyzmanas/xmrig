@@ -60,8 +60,9 @@ public:
     inline int threadId() const                       { return m_threadId; }
     inline size_t size() const                        { return m_size; }
     inline uint64_t *nonce()                          { return reinterpret_cast<uint64_t*>(m_blob + LEN::PREHASH);  }
-    inline uint32_t diff() const                      { return (uint32_t) m_diff; }
-    inline uint32_t target() const                    { return m_target; }
+    inline uint64_t diff() const                      { return m_diff; }
+    inline uint64_t target() const                    { return m_target; }
+    inline uint64_t *targetAll()                      { return m_targetAll; }
     inline uint64_t jobId() const                     { return m_jobId; }
     inline uint64_t jobUnit() const                   { return m_jobUnit; }
     inline void reset()                               { m_size = 0; m_diff = 0; }
@@ -77,7 +78,7 @@ public:
 
     static bool fromHex(const char* in, unsigned int len, unsigned char* out);
     static inline uint64_t *nonce(uint8_t *blob)   { return reinterpret_cast<uint64_t*>(blob + LEN::PREHASH); }
-    static inline uint32_t toDiff(uint32_t target) { return target; }
+    static inline uint64_t toDiff(uint64_t target) { return target; }
     static void toHex(const unsigned char* in, unsigned int len, char* out);
     static void toHexLittle(const unsigned char* in, unsigned int len, char* out);
 
@@ -93,8 +94,9 @@ private:
     int m_poolId;
     int m_threadId;
     size_t m_size;
-    uint32_t m_diff;
-    uint32_t m_target;
+    uint64_t m_diff;
+    uint64_t m_target;
+    uint64_t m_targetAll[LEN::DIFF_ARR_CNT];
     uint8_t m_blob[LEN::BLOB];
     uint64_t m_jobId;
     uint64_t m_jobUnit;
