@@ -43,7 +43,7 @@ public:
     ~Job();
 
     bool setBlob(const char *blob);
-    bool setTarget(const char *target);
+    bool setTarget(const char *target, const int zeroCnt);
     bool setJobId(const char *id);
     bool setJobUnit(const char *unit);
     xmrig::Variant variant() const;

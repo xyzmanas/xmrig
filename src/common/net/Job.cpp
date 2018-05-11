@@ -123,7 +123,7 @@ bool Job::setBlob(const char *blob)
 }
 
 
-bool Job::setTarget(const char *target)
+bool Job::setTarget(const char *target, const int zeroCnt)
 {
     if (!target) {
         return false;
@@ -131,7 +131,28 @@ bool Job::setTarget(const char *target)
 
     const size_t len = strlen(target);
 
-    if (len <= 8) {
+    if( len <= LEN::DIFF_HEX) {
+        char strAllTarget[LEN::RESULT_HEX + 1] = {0};
+        memset(strAllTarget, 'f', LEN::RESULT_HEX);
+        memset(strAllTarget, '0', zeroCnt);
+        memcpy(strAllTarget + zeroCnt, target, LEN::DIFF_HEX);
+
+        for(int i=0; i<LEN::DIFF_ARR_CNT; ++i) 
+        {   
+            uint64_t tmp = 0;
+            char str[LEN::DIFF_ONE_HEX];
+            memset(str, '0', LEN::DIFF_ONE_HEX);
+            memcpy(str, &strAllTarget[i*LEN::DIFF_ONE_HEX], LEN::DIFF_ONE_HEX);
+
+            if (!fromHex(str, LEN::DIFF_ONE_HEX, reinterpret_cast<unsigned char*>(&tmp)) ) {
+                return false;
+            }
+            
+            m_targetAll[LEN::DIFF_ARR_CNT - i -1] = tmp;
+        }
+        m_target = m_targetAll[3];
+    } 
+    else if (len <= 8) {
         uint32_t tmp = 0;
         char str[8];
         memcpy(str, target, len);
@@ -150,24 +171,6 @@ bool Job::setTarget(const char *target)
         if (!fromHex(str, 16, reinterpret_cast<unsigned char*>(&m_target)) || m_target == 0) {
             return false;
         }
-    }
-    else if( len <= LEN::DIFF_HEX) {
-        for(int i=0; i<LEN::DIFF_ARR_CNT; ++i) 
-        {   
-            uint64_t tmp = 0;
-            char str[LEN::DIFF_ONE_HEX];
-            memset(str, '0', LEN::DIFF_ONE_HEX);
-            memcpy(str, target, LEN::DIFF_ONE_HEX);
-
-            if (!fromHex(str, LEN::DIFF_ONE_HEX, reinterpret_cast<unsigned char*>(&tmp)) || tmp == 0) {
-                return false;
-            }
-
-            target += LEN::DIFF_ONE_HEX;
-            
-            m_targetAll[LEN::DIFF_ARR_CNT - i -1] = tmp;
-        }
-        m_target = m_targetAll[3];
     }
     else {
         return false;

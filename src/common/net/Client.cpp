@@ -260,7 +260,7 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
         return false;
     }
     
-    if (!job.setTarget(params[NOTI::TARGET].GetString())) {
+    if (!job.setTarget(params[NOTI::TARGET].GetString(), atoi(params[NOTI::TARGET_0_CNT].GetString()))) {
         *code = 5;
         return false;
     }
