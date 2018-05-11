@@ -30,7 +30,7 @@
 #include "common/net/SubmitResult.h"
 
 
-SubmitResult::SubmitResult(int64_t seq, uint32_t diff, uint32_t actualDiff, int64_t reqId) :
+SubmitResult::SubmitResult(int64_t seq, uint64_t diff, uint64_t actualDiff, int64_t reqId) :
     reqId(reqId),
     seq(seq),
     diff(diff),

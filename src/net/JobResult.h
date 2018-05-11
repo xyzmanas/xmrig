@@ -37,7 +37,7 @@ class JobResult
 {
 public:
     inline JobResult() : poolId(0), diff(0), nonce(0) {}
-    inline JobResult(int poolId, const xmrig::Id &jobId, uint64_t nonce, const uint8_t *result, uint32_t diff, const xmrig::Algorithm &algorithm) :
+    inline JobResult(int poolId, const xmrig::Id &jobId, uint64_t nonce, const uint8_t *result, uint64_t diff, const xmrig::Algorithm &algorithm) :
         poolId(poolId),
         diff(diff),
         nonce(nonce),
@@ -48,14 +48,14 @@ public:
     }
 
 
-    inline uint32_t actualDiff() const
+    inline uint64_t actualDiff() const
     {
-        return Job::toDiff((result[0] << 8) + result[1]);
+        return Job::toDiff(reinterpret_cast<const uint64_t*>(result)[3]);
     }
 
 
     int poolId;
-    uint32_t diff;
+    uint64_t diff;
     uint64_t nonce;
     uint8_t result[LEN::RESULT];
     xmrig::Algorithm algorithm;
