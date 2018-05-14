@@ -44,8 +44,7 @@ public:
 
     bool setBlob(const char *blob);
     bool setTarget(const char *target, const int zeroCnt);
-    bool setJobId(const char *id);
-    bool setJobUnit(const char *unit);
+    bool setJobId(const int idx, const int minerCnt);
     xmrig::Variant variant() const;
 
     inline bool isNicehash() const                    { return m_nicehash; }
@@ -77,6 +76,7 @@ public:
 #   endif
 
     static bool fromHex(const char* in, unsigned int len, unsigned char* out);
+    static bool fromHexLittle(const char* in, unsigned int len, unsigned char* out);
     static inline uint64_t *nonce(uint8_t *blob)   { return reinterpret_cast<uint64_t*>(blob + LEN::PREHASH); }
     static inline uint64_t toDiff(uint64_t target) { return target; }
     static void toHex(const unsigned char* in, unsigned int len, char* out);

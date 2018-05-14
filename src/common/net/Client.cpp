@@ -250,7 +250,7 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
 {
     Job job(m_id, m_nicehash, m_pool.algorithm(), m_rpcId);
     
-    if (!job.setJobId(params[NOTI::JOB_ID].GetString())) { 
+    if (!job.setJobId(params[NOTI::JOB_ID].GetInt(), params[NOTI::MINER_CNT].GetInt())) { 
         *code = 3;
         return false;
     }
@@ -265,10 +265,6 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
         return false;
     }
     
-    if(!job.setJobUnit(params[NOTI::JOB_UNIT].GetString())){
-        *code = 6;
-        return false;
-    }
 
     if (params.HasMember("algo")) {
         job.algorithm().parseAlgorithm(params["algo"].GetString());

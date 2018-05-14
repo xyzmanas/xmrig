@@ -32,7 +32,6 @@
 #include "workers/MultiWorker.h"
 #include "workers/Workers.h"
 
-
 template<size_t N>
 MultiWorker<N>::MultiWorker(Handle *handle)
     : Worker(handle)

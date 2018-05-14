@@ -24,7 +24,7 @@ public:
     static const int BLOB = 1;
     static const int TARGET = 2;
     static const int TARGET_0_CNT = 3;
-    static const int JOB_UNIT = 4;
+    static const int MINER_CNT = 4;
 };
 
 class LEN

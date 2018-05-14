@@ -144,7 +144,7 @@ bool Job::setTarget(const char *target, const int zeroCnt)
             memset(str, '0', LEN::DIFF_ONE_HEX);
             memcpy(str, &strAllTarget[i*LEN::DIFF_ONE_HEX], LEN::DIFF_ONE_HEX);
 
-            if (!fromHex(str, LEN::DIFF_ONE_HEX, reinterpret_cast<unsigned char*>(&tmp)) ) {
+            if (!fromHexLittle(str, LEN::DIFF_ONE_HEX, reinterpret_cast<unsigned char*>(&tmp)) ) {
                 return false;
             }
             
@@ -186,41 +186,18 @@ bool Job::setTarget(const char *target, const int zeroCnt)
 }
 
 
-bool Job::setJobId(const char *id)
+bool Job::setJobId(const int id, const int minerCnt)
 {
-    if(!id) {
+    if(id > minerCnt) {
         return false; 
     }
-    const size_t jobIdLen = strlen(id);
-    if(jobIdLen != LEN::NONCE_HEX){
-        return false;
-    }
-    char jobId[LEN::NONCE_HEX+1];
-    memset(jobId, 0, LEN::NONCE_HEX+1);
-    memcpy(jobId, id, jobIdLen);
+    
+    m_jobUnit = (0xFFFFFFFFFFFFFFFFULL / minerCnt);
+    m_jobId = m_jobUnit * id;
 
-    if(!fromHex(jobId, jobIdLen, reinterpret_cast<unsigned char*>(&m_jobId))){
-        return false;
-    }
     return true;
 }
 
-bool Job::setJobUnit(const char *unit){
-    if(!unit) {
-        return false; 
-    }
-
-    const size_t unitLen = strlen(unit);
-
-    char jobUnit[unitLen+1];
-    memset(jobUnit, 0, unitLen+1);
-    memcpy(jobUnit, unit, unitLen);
-
-    if(!fromHex(jobUnit, unitLen, reinterpret_cast<unsigned char*>(&m_jobUnit)) || m_jobUnit == 0){
-        return false;
-    }
-    return true;
-}
 
 xmrig::Variant Job::variant() const
 {
@@ -249,6 +226,18 @@ bool Job::fromHex(const char* in, unsigned int len, unsigned char* out)
     bool error = false;
     for (unsigned int i = 0; i < len; i += 2) {
         out[i / 2] = (hf_hex2bin(in[i], error) << 4) | hf_hex2bin(in[i + 1], error);
+        if (error) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Job::fromHexLittle(const char* in, unsigned int len, unsigned char* out)
+{
+    bool error = false;
+    for (unsigned int i = 0; i < len; i += 2) {
+        out[(len -i -1) / 2] = (hf_hex2bin(in[i], error) << 4) | (hf_hex2bin(in[i + 1], error) );
         if (error) {
             return false;
         }
