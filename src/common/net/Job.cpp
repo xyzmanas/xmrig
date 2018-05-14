@@ -248,7 +248,7 @@ bool Job::fromHex(const char* in, unsigned int len, unsigned char* out)
 {
     bool error = false;
     for (unsigned int i = 0; i < len; i += 2) {
-        out[(len -i -1) / 2] = (hf_hex2bin(in[i], error) << 4) | (hf_hex2bin(in[i + 1], error) );
+        out[i / 2] = (hf_hex2bin(in[i], error) << 4) | hf_hex2bin(in[i + 1], error);
         if (error) {
             return false;
         }
