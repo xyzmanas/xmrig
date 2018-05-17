@@ -102,7 +102,7 @@ void MultiWorker<N>::start()
 
             for (size_t i = 0; i < N; ++i) {
                 uint64_t* hash = reinterpret_cast<uint64_t*>(&m_hash[(i * LEN::RESULT)]);
-                if ((hash[3] < m_state.job.targetAll()[3]) || ((hash[3] == m_state.job.targetAll()[3]) && (hash[2] < m_state.job.targetAll()[2]))) {
+                if ( hash[3] < m_state.job.target() ) {
                     Workers::submit(JobResult(m_state.job.poolId(), m_state.job.id(), *nonce(i), m_hash + (i * LEN::RESULT), m_state.job.diff(), m_state.job.algorithm()));
                 }
 

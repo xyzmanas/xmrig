@@ -23,8 +23,7 @@ public:
     static const int JOB_ID = 0;
     static const int BLOB = 1;
     static const int TARGET = 2;
-    static const int TARGET_0_CNT = 3;
-    static const int MINER_CNT = 4;
+    static const int MINER_CNT = 3;
 };
 
 class LEN
@@ -33,7 +32,7 @@ public:
     static const int BLOB_HEX = 144;
     static const int PREHASH_HEX = 128;
     static const int NONCE_HEX = 16;
-    static const int DIFF_HEX = 6;
+    static const int DIFF_HEX = 16;
     static const int RESULT_HEX = 64;
     static const int DIFF_ONE_HEX = 16;
     

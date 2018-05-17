@@ -43,7 +43,8 @@ public:
     ~Job();
 
     bool setBlob(const char *blob);
-    bool setTarget(const char *target, const int zeroCnt);
+    // bool setTarget(const char *target, const int zeroCnt);
+    bool setTarget(const char *target);
     bool setJobId(const int idx, const int minerCnt);
     xmrig::Variant variant() const;
 
@@ -61,7 +62,6 @@ public:
     inline uint64_t *nonce()                          { return reinterpret_cast<uint64_t*>(m_blob + LEN::PREHASH);  }
     inline uint64_t diff() const                      { return m_diff; }
     inline uint64_t target() const                    { return m_target; }
-    inline uint64_t *targetAll()                      { return m_targetAll; }
     inline uint64_t jobId() const                     { return m_jobId; }
     inline uint64_t jobUnit() const                   { return m_jobUnit; }
     inline void reset()                               { m_size = 0; m_diff = 0; }
@@ -96,7 +96,6 @@ private:
     size_t m_size;
     uint64_t m_diff;
     uint64_t m_target;
-    uint64_t m_targetAll[LEN::DIFF_ARR_CNT];
     uint8_t m_blob[LEN::BLOB];
     uint64_t m_jobId;
     uint64_t m_jobUnit;

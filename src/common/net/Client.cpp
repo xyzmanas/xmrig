@@ -259,8 +259,8 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
         *code = 4;     
         return false;
     }
-    
-    if (!job.setTarget(params[NOTI::TARGET].GetString(), params[NOTI::TARGET_0_CNT].GetInt())) {
+   
+    if (!job.setTarget(params[NOTI::TARGET].GetString())){
         *code = 5;
         return false;
     }
@@ -441,7 +441,7 @@ void Client::connect(sockaddr *addr)
 void Client::login()
 {
     sendSubscribe();
- 
+    
     sendAuthorize();
 
 }
@@ -529,7 +529,7 @@ void Client::parseNotification(const char *method, const rapidjson::Value &param
         }
         return;
     }
-
+    
     if (!method) {
         return;
     }
