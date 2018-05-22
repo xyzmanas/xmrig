@@ -54,7 +54,12 @@ private:
     void consumeJob();
     void save(const Job &job);
 
-    inline uint64_t *nonce(size_t index)
+    inline uint32_t *nonce(size_t index)
+    {
+        return reinterpret_cast<uint32_t*>(m_state.blob + LEN::PREHASH + LEN::JOBID);
+    }
+
+     inline uint64_t *hyconNonce(size_t index)
     {
         return reinterpret_cast<uint64_t*>(m_state.blob + LEN::PREHASH);
     }

@@ -43,15 +43,13 @@ public:
     ~Job();
 
     bool setBlob(const char *blob);
-    // bool setTarget(const char *target, const int zeroCnt);
     bool setTarget(const char *target);
-    bool setJobId(const int idx, const int minerCnt);
     xmrig::Variant variant() const;
 
     inline bool isNicehash() const                    { return m_nicehash; }
     inline bool isValid() const                       { return m_size > 0 && m_diff > 0; }
     inline bool setId(const char *id)                 { return m_id.setId(id); }
-    inline const uint64_t *nonce() const              { return reinterpret_cast<const uint64_t*>(m_blob + LEN::PREHASH); }
+    inline const uint32_t *nonce() const              { return reinterpret_cast<const uint32_t*>(m_blob + LEN::PREHASH + LEN::JOBID ); }
     inline const uint8_t *blob() const                { return m_blob; }
     inline const xmrig::Algorithm &algorithm() const  { return m_algorithm; }
     inline const xmrig::Id &clientId() const          { return m_clientId; }
@@ -59,15 +57,14 @@ public:
     inline int poolId() const                         { return m_poolId; }
     inline int threadId() const                       { return m_threadId; }
     inline size_t size() const                        { return m_size; }
-    inline uint64_t *nonce()                          { return reinterpret_cast<uint64_t*>(m_blob + LEN::PREHASH);  }
-    inline uint64_t diff() const                      { return m_diff; }
+    inline uint32_t *nonce()                          { return reinterpret_cast<uint32_t*>(m_blob + LEN::PREHASH + LEN::JOBID); }
+    inline uint32_t diff() const                      { return static_cast<uint32_t>(m_diff); }
     inline uint64_t target() const                    { return m_target; }
-    inline uint64_t jobId() const                     { return m_jobId; }
-    inline uint64_t jobUnit() const                   { return m_jobUnit; }
     inline void reset()                               { m_size = 0; m_diff = 0; }
     inline void setClientId(const xmrig::Id &id)      { m_clientId = id; }
     inline void setPoolId(int poolId)                 { m_poolId = poolId; }
     inline void setThreadId(int threadId)             { m_threadId = threadId; }
+    inline void setJobId(uint32_t prefix)             { *(reinterpret_cast<uint32_t*>(m_blob + LEN::PREHASH) ) = prefix;}
     inline xmrig::Algorithm &algorithm()              { return m_algorithm; }
 
 #   ifdef XMRIG_PROXY_PROJECT
@@ -76,11 +73,9 @@ public:
 #   endif
 
     static bool fromHex(const char* in, unsigned int len, unsigned char* out);
-    static bool fromHexLittle(const char* in, unsigned int len, unsigned char* out);
-    static inline uint64_t *nonce(uint8_t *blob)   { return reinterpret_cast<uint64_t*>(blob + LEN::PREHASH); }
+    static inline uint32_t *nonce(uint8_t *blob)   { return reinterpret_cast<uint32_t*>(blob +  LEN::PREHASH + LEN::JOBID ); }
     static inline uint64_t toDiff(uint64_t target) { return target; }
     static void toHex(const unsigned char* in, unsigned int len, char* out);
-    static void toHexLittle(const unsigned char* in, unsigned int len, char* out);
 
 #   ifdef APP_DEBUG
     static char *toHex(const unsigned char* in, unsigned int len);
@@ -97,11 +92,8 @@ private:
     uint64_t m_diff;
     uint64_t m_target;
     uint8_t m_blob[LEN::BLOB];
-    uint64_t m_jobId;
-    uint64_t m_jobUnit;
     xmrig::Algorithm m_algorithm;
     xmrig::Id m_clientId;
-
     xmrig::Id m_id;
 
 #   ifdef XMRIG_PROXY_PROJECT

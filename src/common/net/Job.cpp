@@ -165,19 +165,6 @@ bool Job::setTarget(const char *target)
 }
 
 
-bool Job::setJobId(const int id, const int minerCnt)
-{
-    if(id > minerCnt) {
-        return false; 
-    }
-    
-    m_jobUnit = (0xFFFFFFFFFFFFFFFFULL / minerCnt);
-    m_jobId = m_jobUnit * id;
-
-    return true;
-}
-
-
 xmrig::Variant Job::variant() const
 {
     if (m_algorithm.variant() == xmrig::VARIANT_XTL && m_blob[0] < 4) {
@@ -210,26 +197,6 @@ bool Job::fromHex(const char* in, unsigned int len, unsigned char* out)
         }
     }
     return true;
-}
-
-bool Job::fromHexLittle(const char* in, unsigned int len, unsigned char* out)
-{
-    bool error = false;
-    for (unsigned int i = 0; i < len; i += 2) {
-        out[(len -i -1) / 2] = (hf_hex2bin(in[i], error) << 4) | (hf_hex2bin(in[i + 1], error) );
-        if (error) {
-            return false;
-        }
-    }
-    return true;
-}
-
-void Job::toHexLittle(const unsigned char* in, unsigned int len, char* out)
-{
-    for (unsigned int i = 0; i < len; i++) {
-        out[(len - i)*2 - 2] = hf_bin2hex((in[i] & 0xF0) >> 4);
-        out[(len - i)*2 - 1] = hf_bin2hex(in[i] & 0x0F);
-    }
 }
 
 void Job::toHex(const unsigned char* in, unsigned int len, char* out)

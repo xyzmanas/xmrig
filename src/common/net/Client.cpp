@@ -172,7 +172,7 @@ int64_t Client::submit(const JobResult &result)
     char data[LEN::RESULT_HEX + 1];
 
     memset(nonce, 0, LEN::NONCE_HEX + 1);
-    Job::toHexLittle(reinterpret_cast<const unsigned char*>(&result.nonce), LEN::NONCE, nonce);
+    Job::toHex(reinterpret_cast<const unsigned char*>(&result.nonce), LEN::HYCON_NONCE, nonce);
     nonce[LEN::NONCE_HEX] = '\0';
 
     memset(data, 0, LEN::RESULT_HEX + 1);
@@ -203,7 +203,7 @@ int64_t Client::submit(const JobResult &result)
 #   else    
     m_results[m_sequence] = SubmitResult(m_sequence, result.diff, result.actualDiff());
 #   endif
-
+   
     return send(doc);
 }
 
@@ -250,10 +250,11 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
 {
     Job job(m_id, m_nicehash, m_pool.algorithm(), m_rpcId);
     
-    if (!job.setJobId(params[NOTI::JOB_ID].GetInt(), params[NOTI::MINER_CNT].GetInt())) { 
+    if (!params[NOTI::JOB_ID].IsUint()) { 
         *code = 3;
         return false;
     }
+    job.setJobId(params[NOTI::JOB_ID].GetUint());
     
     if (!job.setBlob(params[NOTI::BLOB].GetString())) {
         *code = 4;     
