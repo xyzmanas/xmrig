@@ -20,9 +20,10 @@
 class NOTI 
 {
 public:
-    static const int JOB_ID = 0;
+    static const int JOB_PREFIX = 0;
     static const int BLOB = 1;
     static const int TARGET = 2;
+    static const int JOB_ID = 3;
 };
 
 class LEN
@@ -37,7 +38,7 @@ public:
     
     static const int BLOB = 72;
     static const int PREHASH = 64;
-    static const int JOBID = 4;
+    static const int JOB_PREFIX = 4;
     static const int HYCON_NONCE = 8;
     static const int DIFF = 3;
     static const int RESULT = 32;

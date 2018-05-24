@@ -187,8 +187,10 @@ int64_t Client::submit(const JobResult &result)
     doc.AddMember("method",  "mining.submit", allocator);
 
     Value params(kObjectType);
+    char jobid[20];
+    sprintf(jobid,"%u", result.jobId);
     params.AddMember("id",     StringRef(m_rpcId.data()), allocator);
-    params.AddMember("job_id", StringRef(result.jobId.data()), allocator);
+    params.AddMember("job_id", StringRef(jobid), allocator);
     params.AddMember("nonce",  StringRef(nonce), allocator);
     params.AddMember("result", StringRef(data), allocator);
 
@@ -250,11 +252,11 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
 {
     Job job(m_id, m_nicehash, m_pool.algorithm(), m_rpcId);
     
-    if (!params[NOTI::JOB_ID].IsUint()) { 
+    if (!params[NOTI::JOB_PREFIX].IsUint()) { 
         *code = 3;
         return false;
     }
-    job.setJobId(params[NOTI::JOB_ID].GetUint());
+    job.setJobId(params[NOTI::JOB_PREFIX].GetUint());
     
     if (!job.setBlob(params[NOTI::BLOB].GetString())) {
         *code = 4;     
@@ -265,7 +267,13 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
         *code = 5;
         return false;
     }
-    
+
+    if (!params[NOTI::JOB_ID].IsUint()) {
+        *code = 6;
+        return false;
+    }
+    job.setJobId(params[NOTI::JOB_ID].GetUint());
+
     if (!verifyAlgorithm(job.algorithm())) {
         *code = 6;
 

@@ -103,7 +103,7 @@ void MultiWorker<N>::start()
             for (size_t i = 0; i < N; ++i) {
                 uint64_t* hash = reinterpret_cast<uint64_t*>(&m_hash[(i * LEN::RESULT)]);
                 if ( hash[3] < m_state.job.target() ) {
-                    Workers::submit(JobResult(m_state.job.poolId(), m_state.job.id(), *hyconNonce(i), m_hash + (i * LEN::RESULT), m_state.job.diff(), m_state.job.algorithm()));
+                    Workers::submit(JobResult(m_state.job.poolId(), m_state.job.jobId(), *hyconNonce(i), m_hash + (i * LEN::RESULT), m_state.job.diff(), m_state.job.algorithm()));
                 }
 
                 *nonce(i) += 1;
@@ -122,7 +122,7 @@ void MultiWorker<N>::start()
 template<size_t N>
 bool MultiWorker<N>::resume(const Job &job)
 {
-    if (m_state.job.poolId() == -1 && job.poolId() >= 0 && job.id() == m_pausedState.job.id()) {
+    if (m_state.job.poolId() == -1 && job.poolId() >= 0 && job.jobId() == m_pausedState.job.jobId()) {
         m_state = m_pausedState;
         return true;
     }

@@ -56,7 +56,7 @@ private:
 
     inline uint32_t *nonce(size_t index)
     {
-        return reinterpret_cast<uint32_t*>(m_state.blob + LEN::PREHASH + LEN::JOBID);
+        return reinterpret_cast<uint32_t*>(m_state.blob + LEN::PREHASH + LEN::JOB_PREFIX);
     }
 
      inline uint64_t *hyconNonce(size_t index)
