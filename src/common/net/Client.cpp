@@ -256,7 +256,7 @@ bool Client::parseJob(const rapidjson::Value &params, int *code)
         *code = 3;
         return false;
     }
-    job.setJobId(params[NOTI::JOB_PREFIX].GetUint());
+    job.setPrefix(params[NOTI::JOB_PREFIX].GetUint());
     
     if (!job.setBlob(params[NOTI::BLOB].GetString())) {
         *code = 4;     
