@@ -31,19 +31,17 @@ class LEN
 public:
     static const int BLOB_HEX = 144;
     static const int PREHASH_HEX = 128;
+    static const int JOB_PREFIX_HEX = 8;
     static const int NONCE_HEX = 16;
     static const int DIFF_HEX = 16;
     static const int RESULT_HEX = 64;
-    static const int DIFF_ONE_HEX = 16;
     
     static const int BLOB = 72;
     static const int PREHASH = 64;
     static const int JOB_PREFIX = 4;
-    static const int HYCON_NONCE = 8;
-    static const int DIFF = 3;
+    static const int NONCE = 8;
+    static const int DIFF = 8;
     static const int RESULT = 32;
-    static const int DIFF_ONE = 8;
-
-    static const int DIFF_ARR_CNT = 4;
+    static const int JOB_ID = 10;
 };
 #endif

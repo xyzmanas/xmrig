@@ -28,8 +28,7 @@
 
 #include <memory.h>
 #include <stdint.h>
-#include "net/Protocol.h"
-
+#include "common/net/Protocol.h"
 #include "common/net/Job.h"
 
 

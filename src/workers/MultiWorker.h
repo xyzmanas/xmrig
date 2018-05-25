@@ -31,7 +31,7 @@
 #include "Mem.h"
 #include "net/JobResult.h"
 #include "workers/Worker.h"
-#include "net/Protocol.h"
+#include "common/net/Protocol.h"
 
 
 class Handle;

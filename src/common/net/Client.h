@@ -38,7 +38,7 @@
 #include "common/net/Storage.h"
 #include "common/net/SubmitResult.h"
 #include "rapidjson/fwd.h"
-#include "net/Protocol.h"
+#include "common/net/Protocol.h"
 
 
 class IClientListener;

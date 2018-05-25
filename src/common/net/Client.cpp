@@ -170,14 +170,18 @@ int64_t Client::submit(const JobResult &result)
 #   else
     char nonce[LEN::NONCE_HEX + 1];
     char data[LEN::RESULT_HEX + 1];
+    char jobid[LEN::JOB_ID + 1];
 
     memset(nonce, 0, LEN::NONCE_HEX + 1);
-    Job::toHex(reinterpret_cast<const unsigned char*>(&result.nonce), LEN::HYCON_NONCE, nonce);
+    Job::toHex(reinterpret_cast<const unsigned char*>(&result.nonce), LEN::NONCE, nonce);
     nonce[LEN::NONCE_HEX] = '\0';
 
     memset(data, 0, LEN::RESULT_HEX + 1);
     Job::toHex(result.result, LEN::RESULT, data);
     data[LEN::RESULT_HEX] = '\0';
+
+    memset(jobid, 0, LEN::JOB_ID + 1);
+    sprintf(jobid, "%u", result.jobId);
 #   endif
 
     Document doc(kObjectType);
@@ -187,8 +191,6 @@ int64_t Client::submit(const JobResult &result)
     doc.AddMember("method",  "mining.submit", allocator);
 
     Value params(kObjectType);
-    char jobid[20];
-    sprintf(jobid,"%u", result.jobId);
     params.AddMember("id",     StringRef(m_rpcId.data()), allocator);
     params.AddMember("job_id", StringRef(jobid), allocator);
     params.AddMember("nonce",  StringRef(nonce), allocator);

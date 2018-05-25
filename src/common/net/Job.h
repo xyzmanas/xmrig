@@ -33,7 +33,7 @@
 
 #include "common/crypto/Algorithm.h"
 #include "common/net/Id.h"
-#include "net/Protocol.h"
+#include "common/net/Protocol.h"
 
 class Job
 {
