@@ -102,22 +102,6 @@ Please note performance is highly dependent on system load. The numbers above ar
 * Try setup optimal cpu affinity.
 * Enable fast memory (Large/Huge pages).
 
-<<<<<<< HEAD
-## Donations
-* XMR: `48edfHu7V9Z84YzzMa6fUueoELZ9ZRXq9VetWzYGzKt52XU5xvqgzYnDK9URnRoJMk1j8nLwEVsaSWJ4fhdUyZijBGUicoD`
-* BTC: `1P7ujsXeX7GxQwHNnJsRMgAdNkFZmNVqJT`
-
-## Release checksums
-### SHA-256
-```
-dbc2b0f92df5098dc91a361febfda46382d347ae3085415f35e1637b7ebc67e9 xmrig-2.6.3-xenial-amd64.tar.gz/xmrig-2.6.3/xmrig
-b54ffe80cd54ac486f03f064c09de80b6ec29f19ddebb50a8d7316a947045b85 xmrig-2.6.3-gcc-win32.zip/xmrig.exe
-c828ed21bbaf71a808b26928ab1eb6f6355029f2b731a639043733e6b48e9d77 xmrig-2.6.3-gcc-win64.zip/xmrig.exe
-2e7432d14546b510506ccc22df62ef334d424d02fbc6baaa7a0498a0102de156 xmrig-2.6.3-msvc-win64.zip/xmrig.exe
-```
-
-=======
->>>>>>> Updated README, include config.json during build
 ## Contacts
 * hycon@glosfer.com
 * [site](https://www.hycon.io)
