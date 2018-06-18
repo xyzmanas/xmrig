@@ -1,6 +1,6 @@
 # HYCminer
 
-HYCminer is a high performance Hycon (HYC) CPU miner, forked from [XMRig](https://github.com/xmrig/xmrig) release v2.6.2.
+HYCminer is a high performance Hycon (HYC) CPU miner, forked from [XMRig](https://github.com/xmrig/xmrig) release v2.6.3.
 
 * This is the **CPU-mining** version, there is also a [NVIDIA GPU version](https://github.com/team-hycon/xmrig-nvidia) and [AMD GPU version](https://github.com/team-hycon/xmrig-amd).
 * We plan on releasing our roadmap for next releases soon.
@@ -101,6 +101,10 @@ Please note performance is highly dependent on system load. The numbers above ar
 * Use modern CPUs with AES-NI instruction set.
 * Try setup optimal cpu affinity.
 * Enable fast memory (Large/Huge pages).
+
+## SHA256 for Windows Binary files
+    9ac62cf597973365a55715f993e7333f6d4f0ee8e1c92616a4dd97014e50d08f: certUtil -hashfile hycon-win-0.0.1-without-mhttpd/xmrig.exe sha256
+    1b0100df98846ad03f8eed073fd578b83366417c696cab4261d55ad213a5166e: certUtil -hashfile hycon-win-0.0.1/xmrig.exe sha256
 
 ## Contacts
 * hycon@glosfer.com

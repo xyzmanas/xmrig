@@ -58,7 +58,7 @@ public:
     inline int threadId() const                       { return m_threadId; }
     inline size_t size() const                        { return m_size; }
     inline uint32_t *nonce()                          { return reinterpret_cast<uint32_t*>(m_blob + LEN::PREHASH + LEN::JOB_PREFIX); }
-    inline uint32_t diff() const                      { return static_cast<uint32_t>(m_diff); }
+    inline uint64_t diff() const                      { return m_diff; }
     inline uint64_t target() const                    { return m_target; }
     inline void reset()                               { m_size = 0; m_diff = 0; }
     inline void setClientId(const xmrig::Id &id)      { m_clientId = id; }

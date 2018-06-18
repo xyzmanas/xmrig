@@ -8,6 +8,9 @@
     "retries": 5,
     "retry-pause": 5,
     "syslog": false,
+    "av": 0,
+    "max-cpu-usage": 80,
+    "cpu-priority": 4,
     "pools": [
         {
             "url": "127.0.0.1:9081",
