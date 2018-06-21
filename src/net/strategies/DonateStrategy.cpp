@@ -42,7 +42,7 @@ static inline float randomf(float min, float max) {
 }
 
 
-DonateStrategy::DonateStrategy(int level, const char *user, const xmrig::Algorithm &algorithm, IStrategyListener *listener) :
+DonateStrategy::DonateStrategy(int level, char *user, const xmrig::Algorithm &algorithm, IStrategyListener *listener) :
     m_active(false),
     m_donateTime(level * 60 * 1000),
     m_idleTime((100 - level) * 60 * 1000),
@@ -62,7 +62,7 @@ DonateStrategy::DonateStrategy(int level, const char *user, const xmrig::Algorit
         else {
             m_pools.push_back(Pool(kDonatePool1, 80, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", nullptr, false, true));
             m_pools.push_back(Pool(kDonatePool1, 80,   "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", nullptr, false, true));
-            m_pools.push_back(Pool(kDonatePool2, 5555, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", nullptr, false, false));
+            m_pools.push_back(Pool(kDonatePool2, 80, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", nullptr, false, false));
         }
     }
     else if (algorithm.algo() == xmrig::CRYPTONIGHT_HEAVY) {
