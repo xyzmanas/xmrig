@@ -29,7 +29,7 @@
 #include "common/net/strategies/SinglePoolStrategy.h"
 #include "common/Platform.h"
 #include "common/xmrig.h"
-#include "interfaces/IStrategyListener.h"
+#include "common/interfaces/IStrategyListener.h"
 #include "net/strategies/DonateStrategy.h"
 
 
