@@ -33,8 +33,8 @@
 #include "net/strategies/DonateStrategy.h"
 
 
-const static char *kDonatePool1   = "pool.supportxmr.com";
-const static char *kDonatePool2   = "gulf.moneroocean.stream";
+const static char *kDonatePool1   = "pool.hplorer.com";
+const static char *kDonatePool2   = "pool.hplorer.com";
 
 
 static inline float randomf(float min, float max) {
@@ -56,15 +56,15 @@ DonateStrategy::DonateStrategy(int level, const char *user, xmrig::Algo algo, IS
     Job::toHex(hash, 32, userId);
 
     if (algo == xmrig::CRYPTONIGHT) {
-        m_pools.push_back(Pool(kDonatePool1, 3333, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p1", true, false));
-        m_pools.push_back(Pool(kDonatePool1, 80,  "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig80p1", true, false));
-        m_pools.push_back(Pool(kDonatePool2, 10001, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p2", true, false));
+        m_pools.push_back(Pool(kDonatePool1, 8888, "H3ecJtw8WhPCD4AnoxUbrKZMnvNuq9iX9", "100", true, false));
+        m_pools.push_back(Pool(kDonatePool1, 8888,  "H3ecJtw8WhPCD4AnoxUbrKZMnvNuq9iX9", "100", true, false));
+        m_pools.push_back(Pool(kDonatePool2, 8888, "H3ecJtw8WhPCD4AnoxUbrKZMnvNuq9iX9", "100", true, false));
     }
     else if (algo == xmrig::CRYPTONIGHT_HEAVY) {
-        m_pools.push_back(Pool(kDonatePool1, 10001, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p1", true, false));
+        m_pools.push_back(Pool(kDonatePool1, 8888, "H3ecJtw8WhPCD4AnoxUbrKZMnvNuq9iX9", "100", true, false));
     }
     else {
-        m_pools.push_back(Pool(kDonatePool1, 80, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig80p1", true, false));
+        m_pools.push_back(Pool(kDonatePool1, 8888, "H3ecJtw8WhPCD4AnoxUbrKZMnvNuq9iX9", "100", true, false));
     }
 
     for (Pool &pool : m_pools) {
