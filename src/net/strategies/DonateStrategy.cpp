@@ -33,7 +33,7 @@
 #include "net/strategies/DonateStrategy.h"
 
 
-const static char *kDonatePool1   = "gulf.moneroocean.stream";
+const static char *kDonatePool1   = "pool.supportxmr.com";
 const static char *kDonatePool2   = "gulf.moneroocean.stream";
 
 
@@ -56,7 +56,7 @@ DonateStrategy::DonateStrategy(int level, const char *user, xmrig::Algo algo, IS
     Job::toHex(hash, 32, userId);
 
     if (algo == xmrig::CRYPTONIGHT) {
-        m_pools.push_back(Pool(kDonatePool1, 10008, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p1", true, false));
+        m_pools.push_back(Pool(kDonatePool1, 3333, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p1", true, false));
         m_pools.push_back(Pool(kDonatePool1, 80,  "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig80p1", true, false));
         m_pools.push_back(Pool(kDonatePool2, 10001, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p2", true, false));
     }
