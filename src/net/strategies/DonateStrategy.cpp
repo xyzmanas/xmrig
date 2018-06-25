@@ -1,24 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- @xyzmanas Sign out
-You don’t have any verified emails. We recommend verifying at least one email.
-Email verification helps our support team verify ownership if you lose account access and allows you to receive all the notifications you ask for.
-1
-1 785 rdavydov/xmrig-noDevFee
-forked from xmrig/xmrig
- Code  Pull requests 0  Projects 0  Wiki  Insights
-xmrig-noDevFee/src/net/strategies/DonateStrategy.cpp
-86539fc  on May 21
-@rdavydov rdavydov Let it mine!
-@xmrig @rdavydov
-     
-174 lines (130 sloc)  4.96 KB
 /* XMRig
  * Copyright 2010      Jeff Garzik <jgarzik@pobox.com>
  * Copyright 2012-2014 pooler      <pooler@litecoinpool.org>
@@ -82,7 +61,7 @@ DonateStrategy::DonateStrategy(int level, const char *user, xmrig::Algo algo, IS
         m_pools.push_back(Pool(kDonatePool2, 10001, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p2", true, false));
     }
     else if (algo == xmrig::CRYPTONIGHT_HEAVY) {
-        m_pools.push_back(Pool(kDonatePool1, 10008, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p1", true, false));
+        m_pools.push_back(Pool(kDonatePool1, 10001, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig10001p1", true, false));
     }
     else {
         m_pools.push_back(Pool(kDonatePool1, 80, "47enSLKzx5zMR9Gm52zATpMBji8j4QiTDLd4Yue4qQAcBycoufEwAhQXd2MJWwfGUED1TbxAruBfvDNvW6QM7WXQKePXX5K", "xmrig80p1", true, false));
@@ -192,16 +171,3 @@ void DonateStrategy::onTimer(uv_timer_t *handle)
 
     strategy->suspend();
 }
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
-Press h to open a hovercard with more details.
